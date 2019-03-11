@@ -53,6 +53,31 @@ spec:
                 name: kafka-access
                 key: apikey
                 optional: true
+          - name: MONGO_IP
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-access
+                key: host
+          - name: MONGO_PORT
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-access
+                key: port
+          - name: MONGO_AUTH_DB
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-access
+                key: db
+          - name: MONGO_USER
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-access
+                key: id
+          - name: MONGO_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-access
+                key: pwd                
           - name: TRADE_HISTORY_SERVICE
             value: "trade-history-service"
           - name: TRADE_HISTORY_SERVICE_PORT
