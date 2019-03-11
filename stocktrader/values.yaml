@@ -42,4 +42,4 @@ eventStreamsConsumer:
     pullPolicy: Always
     pullSecrets:
 ingress:
-  host: changeme
+  host: user01-cluster.us-east.containers.appdomain.cloud
