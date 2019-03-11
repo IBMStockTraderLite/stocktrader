@@ -18,7 +18,7 @@ The **portfolio** microservice sits at the center of the application. This micro
 
 **Tradr** is a Node.js UI for the porfolio service
 
-The **event-consumer** service serves as a Kafka consumer and stores trade data published by the portfolio service
+The **event-consumer** service serves as a Kafka consumer and stores trade data published by the portfolio service in the Mongo database.
 
 The **trade-history** service exposes an API to query the historical data in Mongo and is  called by the **portfortio** to get aggregated historical data.
 
