@@ -1,0 +1,8 @@
+apiVersion: v1
+appVersion: "1.0.0"
+description: A Helm chart with a Service object of type ExternalName that serves as a DNS proxy to an external Kafka cluster
+name: kafka-dns-proxy
+version: 1.0.0
+maintainers:
+  - name: David Carew
+    email: carew@us.ibm.com

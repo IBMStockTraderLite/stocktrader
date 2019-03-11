@@ -1,0 +1,116 @@
+#       Copyright 2017 IBM Corp All Rights Reserved
+
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+
+#       http://www.apache.org/licenses/LICENSE-2.0
+
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+#Deploy the pod
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: portfolio
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: portfolio
+        solution: stock-trader
+    spec:
+      containers:
+      - name: portfolio
+        image: "{{ .Values.portfolio.image.repository }}:{{ .Values.portfolio.image.tag }}"
+        env:
+          - name: JDBC_HOST
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-access
+                key: host
+          - name: JDBC_PORT
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-access
+                key: port
+          - name: JDBC_DB
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-access
+                key: db
+          - name: JDBC_ID
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-access
+                key: id
+          - name: JDBC_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-access
+                key: pwd
+          - name: WATSON_URL
+            valueFrom:
+              secretKeyRef:
+                name: watson-access
+                key: endpoint
+          - name: WATSON_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: watson-access
+                key: apikey
+                optional: true
+          - name: KAFKA_TOPIC
+            valueFrom:
+              secretKeyRef:
+                name: kafka-access
+                key: topic
+                optional: true
+          - name: KAFKA_BROKER1_DNS
+            valueFrom:
+              secretKeyRef:
+                name: kafka-access
+                key: broker1host
+                optional: true
+          - name: KAFKA_BROKER1_PORT
+            valueFrom:
+              secretKeyRef:
+                name: kafka-access
+                key: broker1port
+                optional: true
+          - name: KAFKA_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: kafka-access
+                key: apikey
+                optional: true
+        ports:
+          - containerPort: 9080
+
+        imagePullPolicy: {{ .Values.portfolio.image.pullPolicy }}
+      {{- if .Values.portfolio.image.pullSecrets }}
+      imagePullSecrets:
+      - name: {{ .Values.portfolio.image.pullSecrets }}
+      {{- end }}
+---
+#Deploy the service
+apiVersion: v1
+kind: Service
+metadata:
+  name: portfolio-service
+  labels:
+    app: portfolio
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 9080
+      targetPort: 9080
+  selector:
+    app: portfolio

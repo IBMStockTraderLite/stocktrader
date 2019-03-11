@@ -1,0 +1,36 @@
+#Configure the ingress
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+# annotations:
+#   ingress.kubernetes.io/rewrite-target: /tradrr
+  annotations:
+    #kubernetes.io/ingress.class: "nginx"
+    #ingress.kubernetes.io/affinity: "cookie"
+    #ingress.kubernetes.io/session-cookie-name: "route"
+    #ingress.kubernetes.io/session-cookie-hash: "sha1"
+    #ingress.kubernetes.io/rewrite-target: /
+    #ingress.kubernetes.io/secure-backends: "true"
+    #ingress.kubernetes.io/app-root: "/tradr"
+  name: stocktrader-ingress
+spec:
+  rules:
+  - host: user01-cluster.us-east.containers.appdomain.cloud
+    http:
+      paths:
+      - path: /portfolio
+        backend:
+          serviceName: portfolio-service
+          servicePort: 9080
+      - path: /stock-quote
+        backend:
+          serviceName: stock-quote-service
+          servicePort: 9080
+      - path: /tradr
+        backend:
+          serviceName: tradr-service
+          servicePort: 3000
+      - path: /trade-history
+        backend:
+          serviceName: trade-history-service
+          servicePort: 9080

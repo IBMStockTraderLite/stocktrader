@@ -1,0 +1,13 @@
+###############################################################
+######   Kafka DNS Proxy successfully installed           #####
+###############################################################
+
+The Service will map DNS lookups within the cluster for
+
+ {{ .Release.Name }}-{{ .Chart.Name }}
+
+ to the following external Kafka broker:
+
+ {{ .Values.spec.externalName }}
+
+ 

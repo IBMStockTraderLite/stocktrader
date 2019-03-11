@@ -1,0 +1,6 @@
+# Default values for pbw-liberty-MariaDB.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+spec:
+  externalName: 

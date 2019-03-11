@@ -1,0 +1,123 @@
+## Bitnami MariaDB image
+## ref: https://hub.docker.com/r/bitnami/mariadb/tags/
+##
+image:
+  registry: docker.io
+  repository: bitnami/mariadb
+  tag: 10.1.38
+  ## Specify a imagePullPolicy
+  ## Defaults to ''Always'' if image tag is ''latest'', else set to ''IfNotPresent''
+  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ##
+  pullPolicy: IfNotPresent
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  # pullSecrets:
+  #   - myRegistrKeySecretName
+
+  ## Set to true if you would like to see extra information on logs
+  ## It turns BASH and NAMI debugging in minideb
+  ## ref:  https://github.com/bitnami/minideb-extras/#turn-on-bash-debugging
+  debug: false
+
+service:
+  ## Kubernetes service type, ClusterIP and NodePort are supported at present
+  type: ClusterIP
+  # clusterIp: None
+  port: 3306
+  ## Specify the nodePort value for the LoadBalancer and NodePort service types.
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+  ##
+  # nodePort:
+  #   master: 30001
+  #   slave: 30002
+
+## Pods Service Account
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+serviceAccount:
+  ## Specifies whether a ServiceAccount should be created
+  ##
+  create: false
+  ## The name of the ServiceAccount to use.
+  ## If not set and create is true, a name is generated using the mariadb.fullname template
+  # name:
+
+## Role Based Access
+## Ref: https://kubernetes.io/docs/admin/authorization/rbac/
+##
+
+rbac:
+  create: false
+
+## Pod Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+##
+securityContext:
+  enabled: true
+  fsGroup: 1001
+  runAsUser: 1001
+
+# # Use existing secret (ignores root, db and replication passwords)
+# existingSecret:
+
+rootUser:
+  ## MariaDB admin password
+  ## ref: https://github.com/bitnami/bitnami-docker-mariadb#setting-the-root-password-on-first-run
+  ##
+  password:
+  ##
+  ## Option to force users to specify a password. That is required for ''helm upgrade'' to work properly.
+  ## If it is not force, a random password will be generated.
+  forcePassword: false
+
+db:
+  ## MariaDB username and password
+  ## ref: https://github.com/bitnami/bitnami-docker-mariadb#creating-a-database-user-on-first-run
+  ##
+  user: traderuser
+  password:
+  ## Password is ignored if existingSecret is specified.
+  ## Database to create
+  ## ref: https://github.com/bitnami/bitnami-docker-mariadb#creating-a-database-on-first-run
+  ##
+  name: trader
+  ## Option to force users to specify a password. That is required for ''helm upgrade'' to work properly.
+  ## If it is not force, a random password will be generated.
+  forcePassword: false
+
+replication:
+  ## Enable replication. This enables the creation of replicas of MariaDB. If false, only a
+  ## master deployment would be created
+  enabled: false
+
+
+## initdb scripts
+## Specify dictionnary of scripts to be run at first boot
+## Alternatively, you can put your scripts under the files/docker-entrypoint-initdb.d directory
+##
+initdbScripts:
+  
+## Configure master resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+master:
+  resources:
+   limits:
+      cpu: 500m
+      memory: 500Mi
+   requests:
+      cpu: 200m
+      memory: 250Mi
+
+
+master:
+  persistence:
+    ## If true, use a Persistent Volume Claim, If false, use emptyDir
+    ##
+    enabled: false
+    # storageClass: ''-''
+
+slave:
+  replicas: 0

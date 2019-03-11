@@ -1,0 +1,9 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}
+  labels:
+    app: stocktrader
+spec:
+  type: ExternalName
+  externalName: {{ required "A valid external DNS name for a Kafka broker is required!" .Values.spec.externalName }}

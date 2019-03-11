@@ -1,0 +1,45 @@
+# Default values for trader.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+portfolio:
+  image:
+    repository: clouddragons/portfolio
+    tag: latest
+    pullPolicy: Always
+    pullSecrets:
+stockQuote:
+  image:
+    repository: clouddragons/stock-quote-node
+    tag: latest
+    pullPolicy: Always
+    pullSecrets:
+trader:
+  enabled: false
+  image:
+    repository: clouddragons/trader
+    tag: basicregistry
+    pullPolicy: Always
+    pullSecrets:
+tradeHistory:
+  enabled: true
+  image:
+    repository: clouddragons/trade-history
+    tag: latest
+    pullPolicy: Always
+    pullSecrets:
+tradr:
+  enabled: true
+  image:
+    repository: clouddragons/tradr
+    tag: basicregistry
+    pullPolicy: Always
+    pullSecrets:
+eventStreamsConsumer:
+  enabled: true
+  image:
+    repository: clouddragons/event-streams-consumer
+    tag: latest
+    pullPolicy: Always
+    pullSecrets:
+ingress:
+  host: changeme

@@ -1,0 +1,16 @@
+mongodbUsername: traderuser
+mongodbPassword:
+mongodbDatabase: trader
+service:
+    type: ClusterIP
+    port: 27017
+persistence:
+    enabled: false
+metrics:
+    resources:
+      limits:
+        cpu: 250m
+        memory: 256Mi
+      requests:
+        cpu: 150m
+        memory: 128Mi
