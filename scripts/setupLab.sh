@@ -65,10 +65,10 @@ ingress_subdomain=`cat tmp.out | grep "Ingress Subdomain:" | awk '{print $3}' `
 rm tmp.out
 
 echo "Updating Helm chart with ingress subdomain: $ingress_subdomain"
-sed -i '' "s/changeme/$ingress_subdomain/g" ../stocktrader/values.yaml
+sed -i "s/changeme/$ingress_subdomain/g" ../stocktrader/values.yaml
 
 echo "Updating variables.sh with Kafka topic : $KAFKA_TOPIC"
-sed -i '' "s/changeme/$KAFKA_TOPIC/g" variables.sh
+sed -i "s/changeme/$KAFKA_TOPIC/g" variables.sh
 
 echo "Setup completed successfully"
 exit 0
