@@ -15,7 +15,7 @@
 source variables.sh
 
 echo "Creating Kubernetes secret for stocktrader to access API Connect ..."
-kubectl create secret generic stockquote --from-literal=apicurl=$API_CONNECT_PROXY_URL/stocks  --from-literal=url=$STOCK_QUOTE_URL --from-literal=iexurl=$IEX_URL -n ${STOCKTRADER_NAMESPACE}
+kubectl create secret generic stockquote --from-literal=apicurl=$API_CONNECT_PROXY_URL --from-literal=apiccid=$API_CONNECT_PROXY_CLIENTID --from-literal=url=$STOCK_QUOTE_URL --from-literal=iexurl=$IEX_URL -n ${STOCKTRADER_NAMESPACE}
 if [ $? -eq 0 ]; then
     echo "API Connect  setup completed successfully"
 else

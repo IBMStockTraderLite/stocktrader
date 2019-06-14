@@ -37,6 +37,13 @@ spec:
                 key: apicurl
                 optional: true
 
+          - name: API_CONNECT_PROXY_CLIENTID
+            valueFrom:
+              secretKeyRef:
+                name: stockquote
+                key: apiccid
+                optional: true
+
           - name: IEX_URL
             valueFrom:
               secretKeyRef:
