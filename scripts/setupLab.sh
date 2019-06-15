@@ -7,22 +7,46 @@ else
    exit 1
 fi
 
+usage () {
+  echo "Usage:
+  echo "setupLab.sh URL_TO_SETUP_FILES  (if env var USERNAME is set)"
+  echo "or"
+  echo "setupLab.sh URL_TO_SETUP_FILES [CLUSTER_NAME] (if env var USERNAME  is set)"
+  echo "or"
+  echo "setupLab.sh URL_TO_SETUP_FILES [CLUSTER_NAME] [KAFKA_TOPIC_NAME]"
+}
+
 if [ -z "$1" ]
 then
-    echo "Usage: setupLab.sh URL_TO_SETUP_FILES [CLUSTER_NAME]"
+    usage
     exit 1
 fi
 
+
 if [ -z "$2" ]
 then
-    CLUSTER_NAME=$USER-cluster
+    if [ -z "$USERNAME" ]
+    then
+       echo "Error: USERNAME env var not set and CLUSTER_NAME not supplied"
+       usage
+       exit 1
+    else
+       CLUSTER_NAME=$USERNAME-cluster
+    fi
 else
     CLUSTER_NAME=$2
 fi
 
 if [ -z "$3" ]
 then
-    KAFKA_TOPIC=stocktrader-$USER
+  if [ -z "$USERNAME" ]
+  then
+     echo "Error: USERNAME env var not set and KAFKA_TOPIC_NAME not supplied"
+     usage
+     exit 1
+  else
+     KAFKA_TOPIC=stocktrader-$USERNAME
+  fi
 else
     KAFKA_TOPIC=$3
 fi
@@ -50,19 +74,19 @@ else
 fi
 
 echo "Getting Ingress subdomain for cluster $CLUSTER_NAME  ..."
-ibmcloud ks cluster-get --cluster $CLUSTER_NAME > tmp.out
+#ibmcloud ks cluster-get --cluster $CLUSTER_NAME > tmp.out
 
-#ingress_subdomain=`ibmcloud ks cluster-get --cluster $CLUSTER_NAME  | grep Ingress | awk 'NR==1 {print $3}'`
+ingress_subdomain=`ibmcloud ks cluster-get --cluster $CLUSTER_NAME | grep "Ingress Subdomain:" | awk '{print $3}'`
 
 if [ $? -ne 0 ]
 then
     echo "Error: Retrieving ingress subdomain.  Redo cluster access setup and try again"
-    rm tmp.out
+    #rm tmp.out
     exit 1
 fi
 
-ingress_subdomain=`cat tmp.out | grep "Ingress Subdomain:" | awk '{print $3}' `
-rm tmp.out
+#ingress_subdomain=`cat tmp.out | grep "Ingress Subdomain:" | awk '{print $3}' `
+#rm tmp.out
 
 echo "Updating Helm chart with ingress subdomain: $ingress_subdomain"
 sed -i"_x" "s/changeme/$ingress_subdomain/g" ../stocktrader/values.yaml && rm ../stocktrader/values.yaml_x
