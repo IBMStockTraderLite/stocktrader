@@ -8,7 +8,7 @@ else
 fi
 
 usage () {
-  echo "Usage:
+  echo "Usage:"
   echo "setupLab.sh URL_TO_SETUP_FILES  (if env var USERNAME is set)"
   echo "or"
   echo "setupLab.sh URL_TO_SETUP_FILES [CLUSTER_NAME] (if env var USERNAME  is set)"
