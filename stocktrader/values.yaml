@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 portfolio:
   image:
-    repository: clouddragons/portfolio-spring-microservices
-    tag: "1.1"
+    repository: clouddragons/portfolio-spring-appmod
+    tag: "1.0"
     pullPolicy: Always
     pullSecrets:
 stockQuote:
@@ -23,14 +23,14 @@ tradeHistory:
 tradr:
   enabled: true
   image:
-    repository: clouddragons/tradr-node-jquery-microservices-lab
+    repository: clouddragons/tradr-node-jquery-appmod
     tag: "1.0"
     pullPolicy: Always
     pullSecrets:
 eventStreamsConsumer:
   enabled: true
   image:
-    repository: clouddragons/event-streams-consumer-microservices
+    repository: clouddragons/event-streams-consumer-appmod
     tag: "1.0"
     pullPolicy: Always
     pullSecrets:
