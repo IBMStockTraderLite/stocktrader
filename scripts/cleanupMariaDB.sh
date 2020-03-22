@@ -16,7 +16,7 @@
 source variables.sh
 
 echo "Deleting  MariaDB Helm chart ..."
-helm delete --purge $MARIADB_RELEASE_NAME 
+helm uninstall $MARIADB_RELEASE_NAME 
 
 echo "Deleting Kubernetes secrets used to access MariaDB ..."
 kubectl delete secret  mariadb-access -n ${STOCKTRADER_NAMESPACE}

@@ -16,7 +16,7 @@
 source variables.sh
 
 echo "Deleting Kafka DNS Proxy Helm chart ..."
-helm delete --purge $KAFKA_RELEASE_NAME 
+helm uninstall $KAFKA_RELEASE_NAME 
 
 echo "Deleting Kubernetes secrets used to access Kfaka ..."
 kubectl delete secret  kafka-access -n ${STOCKTRADER_NAMESPACE}

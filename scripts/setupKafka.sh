@@ -16,7 +16,7 @@
 source variables.sh
 
 echo "Deploying Kafka DNS Proxy Helm chart ..."
-helm install --name $KAFKA_RELEASE_NAME --set spec.externalName="$KAFKA_BROKER1_DNS"  ../kafka-dns-proxy
+helm install  $KAFKA_RELEASE_NAME --set spec.externalName="$KAFKA_BROKER1_DNS"  ../kafka-dns-proxy
 
 if [ $? -eq 0 ]; then
    echo "Creating Kubernetes secret for stocktrader to access Kafka ..."

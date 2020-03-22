@@ -13,12 +13,15 @@
 #   limitations under the License.
 
 #Deploy the pod
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: event-streams-consumer
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: event-streams-consumer
   template:
     metadata:
       labels:
@@ -53,35 +56,11 @@ spec:
                 name: kafka-access
                 key: apikey
                 optional: true
-          - name: MONGO_IP
-            valueFrom:
-              secretKeyRef:
-                name: mongodb-access
-                key: host
-          - name: MONGO_PORT
-            valueFrom:
-              secretKeyRef:
-                name: mongodb-access
-                key: port
-          - name: MONGO_AUTH_DB
-            valueFrom:
-              secretKeyRef:
-                name: mongodb-access
-                key: db
-          - name: MONGO_USER
-            valueFrom:
-              secretKeyRef:
-                name: mongodb-access
-                key: id
-          - name: MONGO_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mongodb-access
-                key: pwd                
+
           - name: TRADE_HISTORY_SERVICE
             value: "trade-history-service"
           - name: TRADE_HISTORY_SERVICE_PORT
-            value: "9080"
+            value: "5000"
 
         imagePullPolicy: {{ .Values.eventStreamsConsumer.image.pullPolicy }}
       {{- if .Values.eventStreamsConsumer.image.pullSecrets }}

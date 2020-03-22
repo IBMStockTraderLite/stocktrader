@@ -3,43 +3,36 @@
 # Declare variables to be passed into your templates.
 portfolio:
   image:
-    repository: clouddragons/portfolio
-    tag: latest
+    repository: clouddragons/portfolio-spring-microservices
+    tag: "1.1"
     pullPolicy: Always
     pullSecrets:
 stockQuote:
   image:
-    repository: clouddragons/stock-quote-node
-    tag: latest
-    pullPolicy: Always
-    pullSecrets:
-trader:
-  enabled: false
-  image:
-    repository: clouddragons/trader
-    tag: basicregistry
+    repository: clouddragons/stock-quote-liberty
+    tag: "1.0"
     pullPolicy: Always
     pullSecrets:
 tradeHistory:
   enabled: true
   image:
-    repository: clouddragons/trade-history
-    tag: latest
+    repository: clouddragons/trade-history-python
+    tag: "1.1"
     pullPolicy: Always
     pullSecrets:
 tradr:
   enabled: true
   image:
-    repository: clouddragons/tradr
-    tag: basicregistry
+    repository: clouddragons/tradr-node-jquery-microservices-lab
+    tag: "1.0"
     pullPolicy: Always
     pullSecrets:
 eventStreamsConsumer:
   enabled: true
   image:
-    repository: clouddragons/event-streams-consumer
-    tag: latest
+    repository: clouddragons/event-streams-consumer-microservices
+    tag: "1.0"
     pullPolicy: Always
     pullSecrets:
 ingress:
-  host: changeme
+  host: djc-aa-test-5290c8c8e5797924dc1ad5d1b85b37c0-0000.us-east.containers.appdomain.cloud

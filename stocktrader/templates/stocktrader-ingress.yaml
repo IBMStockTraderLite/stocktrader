@@ -1,5 +1,5 @@
 #Configure the ingress
-apiVersion: extensions/v1beta1
+apiVersion:  networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
 # annotations:
@@ -21,7 +21,7 @@ spec:
       - path: /portfolio
         backend:
           serviceName: portfolio-service
-          servicePort: 9080
+          servicePort: 8080
       - path: /stock-quote
         backend:
           serviceName: stock-quote-service
@@ -33,4 +33,4 @@ spec:
       - path: /trade-history
         backend:
           serviceName: trade-history-service
-          servicePort: 9080
+          servicePort: 5000

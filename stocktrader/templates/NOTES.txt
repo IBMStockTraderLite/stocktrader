@@ -1,11 +1,6 @@
 Stocktrader is deployed.
 
-{{- if .Values.trader.enabled }}
-The Java web application is available at
-  https://<ingress-host>>/trader
-{{- end }}
-
 {{- if .Values.tradr.enabled }}
-The node.js web application is available at
-  https://<ingress-host>>/tradr
+The Tradr web application is available at
+  http://{{ .Values.ingress.host }}/tradr
 {{- end }}

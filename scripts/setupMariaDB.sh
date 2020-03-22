@@ -16,8 +16,11 @@
 source variables.sh
 
 echo "Deploying MariaDB Helm chart ..."
-#helm install --name $MARIADB_RELEASE_NAME --set db.password="$MARIADB_PASSWORD" -f ../mariadb/custom-values.yaml stable/mariadb
-helm install --name $MARIADB_RELEASE_NAME --set db.password="$MARIADB_PASSWORD"   -f ../mariadb/custom-values.yaml  ../mariadb
+helm install  $MARIADB_RELEASE_NAME --set db.password="$MARIADB_PASSWORD" \
+    --set db.name="$STOCKTRADER_DB" \
+    --set db.user="$MARIADB_USER" \
+    -f ../mariadb/custom-values.yaml bitnami/mariadb -n $STOCKTRADER_NAMESPACE
+
 if [ $? -eq 0 ]; then
    echo "Creating Kubernetes secret for stocktrader to access MariaDB ..."
    kubectl create secret generic mariadb-access --from-literal=id=$MARIADB_USER --from-literal=pwd=$MARIADB_PASSWORD --from-literal=host=$MARIADB_SERVICE_NAME --from-literal=port=$MARIADB_PORT --from-literal=db=$STOCKTRADER_DB -n ${STOCKTRADER_NAMESPACE}

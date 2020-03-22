@@ -15,8 +15,8 @@
 
 source variables.sh
 
-echo "Deleting  Mongo Helm chart ..."
-helm delete --purge $MONGODB_RELEASE_NAME 
+echo "Deleting  PostgreSQL Helm chart ..."
+helm uninstall $POSTGRESQL_RELEASE_NAME
 
-echo "Deleting Kubernetes secrets used to access MariaDB ..."
-kubectl delete secret  mongodb-access -n ${STOCKTRADER_NAMESPACE}
+echo "Deleting Kubernetes secrets used to access PostgreSQL ..."
+kubectl delete secret  postgresql-access -n ${STOCKTRADER_NAMESPACE}

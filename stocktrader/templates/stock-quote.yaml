@@ -13,13 +13,17 @@
 #   limitations under the License.
 
 #Deploy the pod
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: stock-quote
 
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: stock-quote
+
   template:
     metadata:
       labels:
@@ -37,19 +41,13 @@ spec:
                 key: apicurl
                 optional: true
 
-          - name: API_CONNECT_PROXY_CLIENTID
+          - name: API_CONNECT_CLIENT_ID
             valueFrom:
               secretKeyRef:
                 name: stockquote
                 key: apiccid
                 optional: true
 
-          - name: IEX_URL
-            valueFrom:
-              secretKeyRef:
-                name: stockquote
-                key: iexurl
-                optional: true
         ports:
           - containerPort: 9080
 
@@ -64,9 +62,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: stock-quote-service
-# namespace: stock-trader
-  labels:
-    app: stock-quote
 spec:
   type: ClusterIP
   ports:
