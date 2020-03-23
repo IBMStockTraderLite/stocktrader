@@ -1,8 +1,8 @@
-# IBM Stock Trader Helm Chart (Beta Version)
+# IBM Stock Trader Lite V2.0  Helm Chart (Beta Version)
 
 ## Introduction
 
-This chart installs the IBM Stock Trader microservices.
+This chart installs the IBM Stock Trader Lite V2.0 microservices.
 
 ## Prerequisites
 
