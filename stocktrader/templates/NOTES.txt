@@ -1,6 +1,7 @@
-Stocktrader is deployed.
+Stocktrader Lite V2.0 is deployed.
 
-{{- if .Values.tradr.enabled }}
-The Tradr web application is available at
+The Tradr web application is available at:
   http://{{ .Values.ingress.host }}/tradr
-{{- end }}
+
+This is the base  URL for the Trade History Service:
+     http://{{ .Values.ingress.host }}/trade-history

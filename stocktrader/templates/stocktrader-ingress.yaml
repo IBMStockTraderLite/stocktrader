@@ -18,14 +18,6 @@ spec:
   - host: {{ .Values.ingress.host }}
     http:
       paths:
-      - path: /portfolio
-        backend:
-          serviceName: portfolio-service
-          servicePort: 8080
-      - path: /stock-quote
-        backend:
-          serviceName: stock-quote-service
-          servicePort: 9080
       - path: /tradr
         backend:
           serviceName: tradr-service
