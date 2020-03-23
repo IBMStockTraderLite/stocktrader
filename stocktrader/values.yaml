@@ -35,4 +35,4 @@ eventStreamsConsumer:
     pullPolicy: Always
     pullSecrets:
 ingress:
-  host: djc-aa-test-5290c8c8e5797924dc1ad5d1b85b37c0-0000.us-east.containers.appdomain.cloud
+  host: changeme
